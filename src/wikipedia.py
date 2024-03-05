@@ -8,7 +8,7 @@ async def fetch_wikipedia_data(params):
     return response.json()
 
 
-async def search_title(title):
+async def search_topic(title):
     search_params = {
         "action": "query",
         "format": "json",
@@ -19,7 +19,7 @@ async def search_title(title):
     return result["query"]
 
 
-async def retrieve_title_data(title):
+async def retrieve_topic_data(title):
     title_retrieve_params = {
         "action": "query",
         "format": "json",

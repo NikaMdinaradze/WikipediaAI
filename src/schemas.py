@@ -23,3 +23,8 @@ class SearchResult(BaseModel):
 class SearchResponse(BaseModel):
     searchinfo: SearchInfo
     search: List[SearchResult]
+
+
+class AnalyzedData(BaseModel):
+    title: str
+    summery: str
