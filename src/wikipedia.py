@@ -16,17 +16,7 @@ async def search_title(title):
         "srsearch": title,
     }
     result = await fetch_wikipedia_data(search_params)
-    search_info = result.get("query", {}).get("searchinfo", {})
-    suggestion = search_info.get("suggestion", "")
-    search_results = result.get("query", {}).get("search", [])
-    extracted_data = {
-        "suggestion": suggestion,
-        "results": [
-            {"title": item["title"], "snippet": item["snippet"]}
-            for item in search_results
-        ],
-    }
-    return extracted_data
+    return result["query"]
 
 
 async def retrieve_title_data(title):
