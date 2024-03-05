@@ -1,5 +1,3 @@
-import asyncio
-
 import httpx
 
 
@@ -11,13 +9,24 @@ async def fetch_wikipedia_data(params):
 
 
 async def search_title(title):
-    title_search_params = {
+    search_params = {
         "action": "query",
         "format": "json",
         "list": "search",
         "srsearch": title,
     }
-    return await fetch_wikipedia_data(title_search_params)
+    result = await fetch_wikipedia_data(search_params)
+    search_info = result.get("query", {}).get("searchinfo", {})
+    suggestion = search_info.get("suggestion", "")
+    search_results = result.get("query", {}).get("search", [])
+    extracted_data = {
+        "suggestion": suggestion,
+        "results": [
+            {"title": item["title"], "snippet": item["snippet"]}
+            for item in search_results
+        ],
+    }
+    return extracted_data
 
 
 async def retrieve_title_data(title):
@@ -29,7 +38,3 @@ async def retrieve_title_data(title):
         "explaintext": True,
     }
     return await fetch_wikipedia_data(title_retrieve_params)
-
-
-results = asyncio.run(search_title("dog"))
-print(results)

@@ -1,8 +1,11 @@
 from fastapi import FastAPI
 
+from src.wikipedia import search_title
+
 app = FastAPI()
 
 
-@app.get("/")
-def get(topic: str):
-    return {"topic": topic}
+@app.get("/search")
+async def get(topic: str):
+    result = await search_title(topic)
+    return {"topic": result}
