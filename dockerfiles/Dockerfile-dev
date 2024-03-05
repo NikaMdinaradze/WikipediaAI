@@ -20,4 +20,4 @@ ADD scripts/check_service.py /home/wiki/check_service.py
 RUN chmod +x /home/wiki/docker-entrypoint-dev.sh
 USER wiki
 
-ENTRYPOINT ["/home/bank-api/docker-entrypoint-dev.sh"]
+ENTRYPOINT ["/home/wiki/docker-entrypoint-dev.sh"]

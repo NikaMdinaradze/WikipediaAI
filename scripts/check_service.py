@@ -1,26 +1,28 @@
-import asyncio
-import os
+import argparse
+import socket
+import time
 
-from motor.motor_asyncio import AsyncIOMotorClient
-from pymongo.server_api import ServerApi
+parser = argparse.ArgumentParser(description="Check if port is open")
+parser.add_argument("--service-name", required=True)
+parser.add_argument("--ip", required=True)
+parser.add_argument("--port", required=True)
 
-MONGO_USERNAME = os.getenv("MONGO_USERNAME")
-MONGO_PASSWORD = os.getenv("MONGO_PASSWORD")
-MONGO_HOST = os.getenv("MONGO_HOST")
-MONGO_PORT = os.getenv("MONGO_PORT")
+args = parser.parse_args()
 
-uri = f"mongodb://{MONGO_USERNAME}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/"
-client = AsyncIOMotorClient(uri, server_api=ServerApi("1"))
+# Get arguments
+SERVICE_NAME = str(args.service_name)
+IP = str(args.ip)
+PORT = int(args.port)
 
-
-async def ping_server():
-    while True:
-        try:
-            await client.admin.command("ping")
-            print("You successfully connected to MongoDB!")
-        except Exception as e:
-            print(e)
-            await asyncio.sleep(2)
-
-
-asyncio.run(ping_server())
+# Infinite loop
+while True:
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    result = sock.connect_ex((IP, PORT))
+    if result == 0:
+        print(f"Port is open! Bye! Service:{SERVICE_NAME} Ip:{IP} Port:{PORT}")
+        break
+    else:
+        print(
+            f"Port is not open! I'll check it soon! Service:{SERVICE_NAME} Ip:{IP} Port:{PORT}"
+        )
+        time.sleep(3)
