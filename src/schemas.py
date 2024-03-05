@@ -1,18 +1,25 @@
+import re
 from typing import List
 
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
 
 class SearchInfo(BaseModel):
-    totalhits: int
     suggestion: str
+    totalhits: int
 
 
-class SearchResults(BaseModel):
+class SearchResult(BaseModel):
     title: str
+    wordcount: int
     snippet: str
+
+    @field_validator("snippet")
+    def remove_html_tags(cls, value):
+        pattern = re.compile("<.*?>")
+        return re.sub(pattern, "", value)
 
 
 class SearchResponse(BaseModel):
     searchinfo: SearchInfo
-    results: List[SearchResults]
+    search: List[SearchResult]
