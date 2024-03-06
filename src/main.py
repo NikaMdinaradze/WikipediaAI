@@ -29,7 +29,7 @@ async def retrieval_initiation(
     document = await collection.find_one({"page_id": page_id})
     if document:
         if fresh:
-            await collection.find_one_and_delete({"page_id": page_id})
+            await collection.delete_one({"page_id": page_id})
         else:
             return {"detail": f"{page_id} already exists"}
 
