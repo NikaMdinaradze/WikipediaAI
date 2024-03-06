@@ -1,9 +1,6 @@
-from dotenv import load_dotenv
 from langchain.chains.summarize import load_summarize_chain
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAI
-
-load_dotenv("../.env")
 
 llm = OpenAI()
 

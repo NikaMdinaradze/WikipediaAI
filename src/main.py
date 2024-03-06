@@ -26,6 +26,13 @@ async def retrieval_initiation(
     Endpoint for data retrieval initiation.
     """
 
+    document = await collection.find_one({"page_id": page_id})
+    if document:
+        if fresh:
+            await collection.find_one_and_delete({"page_id": page_id})
+        else:
+            return {"detail": f"{page_id} already exists"}
+
     background_tasks.add_task(retrieve_summarize_write_task, page_id)
     return {"detail": "Initiation successfully accepted"}
 
