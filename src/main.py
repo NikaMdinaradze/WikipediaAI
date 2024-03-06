@@ -19,7 +19,9 @@ async def topic_search(topic: str):
 
 
 @app.post("/initiation", status_code=status.HTTP_202_ACCEPTED)
-async def retrieval_initiation(page_id: int, background_tasks: BackgroundTasks):
+async def retrieval_initiation(
+    page_id: int, fresh: bool, background_tasks: BackgroundTasks
+):
     """
     Endpoint for data retrieval initiation.
     """

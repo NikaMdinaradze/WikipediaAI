@@ -22,7 +22,8 @@ services:
       - '27017:27017'
     volumes:
       - mongo_data:/data/db
-      - ./db_confs/mongod.conf:/etc/mongo/mongod.conf
+      - db_confs:/etc/mongo/mongod.conf
 
 volumes:
   mongo_data:
+  db_confs:
