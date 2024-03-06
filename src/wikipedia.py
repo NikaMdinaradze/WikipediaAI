@@ -19,12 +19,12 @@ async def search_topic(title):
     return result["query"]
 
 
-async def retrieve_topic_data(title):
+async def retrieve_topic_data(pageids):
     title_retrieve_params = {
         "action": "query",
         "format": "json",
         "prop": "extracts",
-        "titles": title,
+        "pageids": pageids,
         "explaintext": True,
     }
     return await fetch_wikipedia_data(title_retrieve_params)

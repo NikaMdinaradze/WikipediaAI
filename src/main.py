@@ -1,7 +1,8 @@
-from fastapi import FastAPI
+from fastapi import BackgroundTasks, FastAPI, status
 
 from src.schemas import SearchResponse
-from src.wikipedia import retrieve_topic_data, search_topic
+from src.tasks import retrieve_topic_data
+from src.wikipedia import search_topic
 
 app = FastAPI()
 
@@ -13,6 +14,9 @@ async def topic_search(topic: str):
 
 
 @app.post("/initiation")
-async def retrieval_initiation(topic: str):
-    result = await retrieve_topic_data(topic)
-    return result
+async def retrieval_initiation(page_id: int, background_tasks: BackgroundTasks):
+    background_tasks.add_task(retrieve_topic_data, page_id)
+    return {
+        "status": status.HTTP_202_ACCEPTED,
+        "detail": "initiation successfully accepted",
+    }

@@ -5,3 +5,8 @@ pydantic==2.6.1
 motor
 pymongo
 httpx
+langchain
+python-dotenv==1.0.1
+openai
+tiktoken
+langchain_openai

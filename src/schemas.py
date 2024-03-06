@@ -1,11 +1,11 @@
 import re
-from typing import List
+from typing import List, Optional
 
 from pydantic import BaseModel, field_validator
 
 
 class SearchInfo(BaseModel):
-    suggestion: str
+    suggestion: Optional[str] = None
     totalhits: int
 
 
@@ -13,6 +13,7 @@ class SearchResult(BaseModel):
     title: str
     wordcount: int
     snippet: str
+    pageid: int
 
     @field_validator("snippet")
     def remove_html_tags(cls, value):
