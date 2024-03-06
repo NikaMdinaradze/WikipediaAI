@@ -27,5 +27,7 @@ class SearchResponse(BaseModel):
 
 
 class AnalyzedData(BaseModel):
+    _id: str
+    page_id: int
     title: str
-    summery: str
+    summarized_topic: str

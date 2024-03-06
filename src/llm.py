@@ -8,7 +8,11 @@ load_dotenv("../.env")
 llm = OpenAI()
 
 
-def map_reduce_summarization(article):
+def map_reduce_summarization(article: str) -> str:
+    """
+    Generate a summary of the given article using map-reduce summarization.
+    """
+
     text_splitter = RecursiveCharacterTextSplitter(
         separators=["\n\n", "\n"], chunk_size=10000, chunk_overlap=500
     )
