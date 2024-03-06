@@ -1,4 +1,4 @@
-from fastapi import BackgroundTasks, FastAPI, status
+from fastapi import BackgroundTasks, FastAPI, HTTPException, status
 
 from src.db import collection
 from src.schemas import SearchResponse
@@ -14,13 +14,10 @@ async def topic_search(topic: str):
     return result
 
 
-@app.post("/initiation")
+@app.post("/initiation", status_code=status.HTTP_202_ACCEPTED)
 async def retrieval_initiation(page_id: int, background_tasks: BackgroundTasks):
     background_tasks.add_task(retrieve_summarize_write_task, page_id)
-    return {
-        "status": status.HTTP_202_ACCEPTED,
-        "detail": "initiation successfully accepted",
-    }
+    return {"detail": "Initiation successfully accepted"}
 
 
 @app.get("/retrieve")
@@ -30,4 +27,7 @@ async def retrieve_summarized_topic(page_id: int):
         document["_id"] = str(document["_id"])
         return document
     else:
-        return None
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Not found topic with {page_id}",
+        )
