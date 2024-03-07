@@ -10,6 +10,11 @@ Python application that retrieves topic-related data from Wikipedia, analyzes it
 ```
 
 ## Run project using docker-compose
+### add env variables
+```text
+  create env directory, copy files from env-pattern directory and fill the
+  variables with appropriate values.
+```
 #### Build and start containers
 Build images and start containers. Migration command will be run during startup.
 ```bash
