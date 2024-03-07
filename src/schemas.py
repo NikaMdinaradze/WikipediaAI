@@ -31,3 +31,7 @@ class AnalyzedData(BaseModel):
     page_id: int
     title: str
     summarized_topic: str
+
+    @field_validator("summarized_topic")
+    def remove_newlines(cls, v):
+        return v.replace("\n", "")
