@@ -16,7 +16,7 @@ Python application that retrieves topic-related data from Wikipedia, analyzes it
   variables with appropriate values.
 ```
 #### Build and start containers
-Build images and start containers. Migration command will be run during startup.
+Build images and start containers.
 ```bash
   make build
   make run
